@@ -2,7 +2,7 @@ import React, {Component, Fragment} from 'react';
 
 import Modal from '../../components/UI/Modal/Modal';
 
-
+// HOC(Higher Order Component) wrappers
 const withErrorHandler  = (WrappedComponent,axios) => {
 
     return class extends Component  {

@@ -1,7 +1,6 @@
 import React,{Component,Fragment} from "react";
 import classes from "./Modal.css";
 import Backdrop from "../Backdrop/Backdrop";
-import { info } from "autoprefixer";
 
 class Modal extends Component {
 
@@ -12,9 +11,7 @@ class Modal extends Component {
     return nextProps.show !== this.props.show || nextProps.children !== this.props.children;
   }
 
-  componentDidUpdate(){
-    console.log('Modal will componentDidUpdate')
-  }
+
 
   render(){
     return(
