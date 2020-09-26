@@ -1,5 +1,4 @@
 import React, { Component,Fragment } from "react";
-import { render } from "react-dom";
 import Button from '../../UI/Button/Button';
 
 class OrderSummary extends Component {
