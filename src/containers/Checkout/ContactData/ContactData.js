@@ -4,6 +4,8 @@ import classes from './ContactData.css';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import axios from '../../../axios-orders';
 import Input from '../../../components/UI/Input/Input';
+import withErrorHandler from '../../../layout/withErrorHandler/withErrorHandler';
+import { connect } from 'react-redux';
 
 class ContactData extends Component {
     state = {
@@ -94,9 +96,10 @@ class ContactData extends Component {
    
 
     orderHandler = (event) =>{
+        
         // to prevent from reloading when submitting the form
       event.preventDefault();
-      this.setState({loading: true});
+      const { ingredients,totalPrice } = this.props.burgerBuilderProps;
 
       const formData = {};
       for(let formElementIdentifier in this.state.orderForm){
@@ -104,19 +107,12 @@ class ContactData extends Component {
       }
 
       const order = {
-             ingredients: this.props.ingredients,
-             price: this.props.price,
+             ingredients: ingredients,
+             price: totalPrice.toFixed(2),
             orderData: formData
-    }
-
-    axios.post('/orders.json',order)
-        .then(response =>{
-          this.setState({loading:false });
-          this.props.history.push('/')
-        })
-        .catch(error => {
-          this.setState({loading:false });
-        });
+         }
+        this.props.onPurchaseBurger(order);
+     
     }
 
     //to check input values
@@ -137,7 +133,7 @@ class ContactData extends Component {
         return isValid;
     }
 
-    inputChangeHandler= (event,inputIdentifier)=>{
+    inputChangeHandler  = (event,inputIdentifier)   =>  {
         const updatedOrderForm = {
             ...this.state.orderForm
         };
@@ -157,7 +153,7 @@ class ContactData extends Component {
             formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
         }
 
-        this.setState({orderForm: updatedOrderForm,formIsValid:formIsValid})
+        this.setState({orderForm: updatedOrderForm, formIsValid: formIsValid})
     }
     render(){
         const formElementsArray = [];
@@ -196,4 +192,6 @@ class ContactData extends Component {
     }
 }
 
-export default ContactData;
+
+export default connect()(withErrorHandler(ContactData,axios)) ;
+

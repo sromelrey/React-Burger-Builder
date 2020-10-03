@@ -1,58 +1,47 @@
 import React, { Component } from 'react';
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
-import {Route} from 'react-router-dom';
-import ContactData from './ContactData/ContactData';
+import {Route,Redirect} from 'react-router-dom';
+import ContactData from './ContactData';
+import {connect} from 'react-redux';
 class Checkout extends Component {
 
-    state  = {
-        ingredients: null,
-         totalPrice: 0
-        }
-
-  
-    
-   
-   componentWillMount(){
-        const query = new URLSearchParams(this.props.location.search);
-        const ingredients = {};
-        let price = 0;
-        for(let param of query.entries()){
-            if(param[0] ==='price') {
-                price = param[1]
-            }
-            else {
-                ingredients[param[0]] = +param[1]
-            }
-            
-        }
-       
-        this.setState({ingredients: ingredients,totalPrice: price});
-        
-    }
-    onCheckoutCancelled =()=>{
+    onCheckoutCancelled = () => {
         this.props.history.goBack();
     }
-    onCheckoutContinued=()=>{
+    onCheckoutContinued = () =>  {
         this.props.history.replace('/checkout/contact-data');
     }
     render(){
+        const { ingredients } = this.props.burgerBuilderProps;
+        const { purchased } = this.props.orderProps;
+        let summary = <Redirect to='/'/>;
+        if(ingredients){
+            const purchasedRedirect = purchased? <Redirect to="/"/> :null;
+            summary =(
+                <React.Fragment>
+                    {purchasedRedirect}
+                    <CheckoutSummary 
+                        ingredients={ingredients}
+                        onCheckoutCancelled={this.onCheckoutCancelled}
+                        onCheckoutContinued={this.onCheckoutContinued}
+                      />
+                     <Route 
+                         path={this.props.match.path + '/contact-data'}
+                         component={ContactData}/>
+
+                 </React.Fragment>
+                
+            )
+        }
         return(
             <div>
-                <CheckoutSummary 
-                ingredients={this.state.ingredients}
-                onCheckoutCancelled={this.onCheckoutCancelled}
-                onCheckoutContinued={this.onCheckoutContinued}
-                />
-                <Route 
-                path={this.props.match.path + '/contact-data'}
-                render={(props) => (<ContactData 
-                                        ingredients={this.state.ingredients} 
-                                         price={this.state.totalPrice} {...props} />)}
-                />
+               {summary}
             </div>
         )
     }
 
 }
 
-export default Checkout;
+
+
+export default connect()(Checkout) ;

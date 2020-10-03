@@ -3,6 +3,7 @@ import Order from '../../components/Order/Order/Order';
 import axios from '../../axios-orders';
 import withErrorHandler from '../../layout/withErrorHandler/withErrorHandler';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import { connect } from 'react-redux';
 
 class Orders extends Component {
     state = {
@@ -11,25 +12,12 @@ class Orders extends Component {
     }
 
     componentDidMount(){
-        axios.get('/orders.json')
-        .then(response=>{
-            const fetchOrders = [];
-            for(let key in response.data){
-                fetchOrders.push(({
-                    ...response.data[key],
-                    id: key
-                }))
-            }
-            this.setState({loading: false , orders: fetchOrders});
-        })
-        .catch(error => {
-            this.setState({loading:false});
-        })
+       this.props.getOrders();
     }
 
 render(){
-    const { orders,loading } = this.state;
-
+    const { orders,loading } = this.props.orderProps;
+    console.log(orders)
     let ordersView = null;
     if(loading){
         ordersView = <Spinner/>
@@ -40,7 +28,7 @@ render(){
                 <Order 
                 key={order.id} 
                 ingredients={order.ingredients}
-                price={+order.price}/>
+                price={ order.price}/>
             )  
             )}
           
@@ -54,4 +42,4 @@ render(){
 }
 }
 
-export default withErrorHandler(Orders,axios);
+export default connect()(  withErrorHandler(Orders,axios));
