@@ -12,7 +12,12 @@ export const PURCHASE_BURGER_ERROR = 'PURCHASE_BURGER_ERROR';
 export const PURCHASE_BURGER_SUCCESS = 'PURCHASE_BURGER_SUCCESS';
 
 /*Orders*/
-
 export const GET_ORDER_REQUEST ='GET_ORDER_REQUEST';
 export const GET_ORDER_ERROR ='GET_ORDER_ERROR';
 export const GET_ORDER_SUCCESS ='GET_ORDER_SUCCESS';
+
+/*Authentication*/
+
+export const AUTH_REQUEST ='AUTH_REQUEST';
+export const AUTH_ERROR ='AUTH_ERROR';
+export const AUTH_SUCCESS ='AUTH_SUCCESS';

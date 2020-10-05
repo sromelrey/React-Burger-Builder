@@ -13,13 +13,17 @@ import thunk from 'redux-thunk';
 
 import burgerBuilderReducer from './reducers/BurgerBuilder';
 import orderReducer from './reducers/Order';
+import authReducer from './reducers/Auth';
 
 const rootReducer = combineReducers({
     burgerBuilder: burgerBuilderReducer,
-    order: orderReducer
+    order: orderReducer,
+    auth: authReducer
 })
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers = process.env.NODE_ENV === 'development'
+                        ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__   :
+                        null || compose;
 
 const store = createStore(
     rootReducer,

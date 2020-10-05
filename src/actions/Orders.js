@@ -67,8 +67,6 @@ export const getOrders = () =>{
               id: key
           }))
     }
-
-    console.log(fetchOrders)
       dispatch({
         type: ActionTypes.GET_ORDER_SUCCESS,
            payload :  {

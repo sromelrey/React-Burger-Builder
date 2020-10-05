@@ -22,7 +22,7 @@
 
 .InputElement:focus {
     outline: none;
-    background-color: #ccc;
+    background-color: rgba(204, 224, 255, 0.884);
 }
 
 .Invalid {

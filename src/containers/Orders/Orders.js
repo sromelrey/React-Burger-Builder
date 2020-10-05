@@ -17,7 +17,6 @@ class Orders extends Component {
 
 render(){
     const { orders,loading } = this.props.orderProps;
-    console.log(orders)
     let ordersView = null;
     if(loading){
         ordersView = <Spinner/>

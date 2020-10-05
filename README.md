@@ -1,3 +1,8 @@
+## This App doesn't follow the tutorial but have all the functionality
+## With Authentication but doesn't store localStorage
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>

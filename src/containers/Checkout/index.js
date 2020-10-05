@@ -8,8 +8,4 @@ const mapsStateToProps = state => ({
     orderProps: state.order
 });
 
-const mapsDispatchToProps = dispatch =>({
-
-});
-
 export default connect(mapsStateToProps)(Checkout) ;
